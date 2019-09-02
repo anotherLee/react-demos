@@ -1,41 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>React 练习</title>
 </head>
 <body>
-<div id="app1"></div>
-<div id="app2"></div>
+<div id="app"></div>
 
 <script src="../../js/react.development.js"></script>
 <script src="../../js/react-dom.development.js"></script>
 <script src="../../js/babel.min.js"></script>
 <script type="text/babel">
   /*
-   * 使用React来创建和渲染DOM
+   * 多级
    */
-  const vDom = React.createElement(
-    'span',
-    {
-      className: 'name',
-    },
-    '我是小明'
-  )
-  ReactDOM.render(vDom, document.getElementById('app1'))
+  ReactDOM.render(<div>
+    <h2>多层标签</h2>
+    <p>测试</p>
+  </div>, document.getElementById('app'))
 </script>
 
 <script type="text/babel">
   /*
-   * JSX会更加灵活，语义化更好，效率更高
+   * 大括号里写的是JS
    */
-  const content = '我是小明'
-  const className = 'name'
-  const vDom = <span className={className}>{content}</span>
-  ReactDOM.render(vDom, document.getElementById('app2'))
+  ReactDOM.render(
+    <div>
+      <span>{ 100 + 12 * 10 }</span>
+    </div>
+  )
 </script>
 
 </body>
