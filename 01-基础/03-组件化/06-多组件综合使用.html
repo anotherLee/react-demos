@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>应用</title>
+  <style>
+    ul, li {
+      list-style: none;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../../js/react.development.js"></script>
+<script src="../../js/react-dom.development.js"></script>
+<script src="../../js/prop-types.js"></script>
+<script src="../../js/babel.min.js"></script>
+<script type="text/babel">
+
+  /*
+   * 多组件使用
+   * 1. 注意数据的存放位置
+   */
+  class App extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        students: [
+          { name: '张三', age: 30, gender: '男', phone: '1111111111' },
+          { name: '李四', age: 22, gender: '男', phone: '1111111111' },
+          { name: '小花', age: 19, gender: '女', phone: '1111111111' },
+        ]
+      }
+      this.delete = this.delete.bind(this)
+      this.add = this.add.bind(this)
+    }
+
+    /*
+     * 删除列表方法，通过props传递给
+     */
+    delete(name) {
+      const tempStudents = this.state.students
+      tempStudents.forEach((student, index) => {
+        if (student.name === name) {
+          tempStudents.splice(index, 1)
+        }
+      })
+      this.setState({
+        students: tempStudents
+      })
+    }
+
+    /*
+     * 添加列表方法，通过props传递给Add组件
+     */
+    add(student) {
+      const { students } = this.state
+      students.push(student)
+      this.setState({
+        students
+      })
+    }
+
+    render() {
+      const { students } = this.state
+      return (
+        <div>
+          <Add add={this.add}/>
+          <List students={students} deleteList={this.delete}/>
+        </div>
+      )
+    }
+  }
+
+  // 添加子组件
+  class Add extends React.Component {
+    constructor(props) {
+      super(props)
+
+      this.studentName = React.createRef()
+      this.studentAge = React.createRef()
+      this.studentGender = React.createRef()
+      this.studentPhone = React.createRef()
+    }
+
+    static propTypes = {
+      add: PropTypes.func.isRequired
+    }
+
+    render() {
+      return (
+        <div>
+          <ul>
+            <li>
+              <span>姓名:</span>
+              <input ref={this.studentName} type='text'/>
+            </li>
+            <li>
+              <span>年龄:</span>
+              <input ref={this.studentAge} type='text'/>
+            </li>
+            <li>
+              <select ref={this.studentGender}>
+                <option>男</option>
+                <option>女</option>
+              </select>
+            </li>
+            <li>
+              <span>手机:</span>
+              <input ref={this.studentPhone} type='text'/>
+            </li>
+            <button onClick={() => {
+              this.dealWithClick()
+            }}>提交
+            </button>
+          </ul>
+        </div>
+      )
+    }
+
+    dealWithClick() {
+      const { add } = this.props
+      const name = this.studentName.current.value
+      const age = this.studentAge.current.value
+      const gender = this.studentGender.current.value
+      const phone = this.studentPhone.current.value
+
+      if (name && age && gender && phone) {
+        add({name, age, gender, phone})
+        // 将input里选项置为默认值
+        this.studentName.current.value = this.studentAge.current.value = this.studentPhone.current.value = ''
+        this.studentGender.current.value = '男'
+        return
+      }
+      alert('数据不能为空')
+    }
+  }
+
+  // 展示子组件，数据从父组件来，所以需要props类型约定
+  class List extends React.Component {
+    // 设置props类型
+    static propTypes = {
+      students: PropTypes.array.isRequired,
+      deleteList: PropTypes.func.isRequired
+    }
+
+    render() {
+      const { students, deleteList } = this.props
+      return (
+        <ul>
+          {
+            students.map(student => {
+              return (
+                <div key={student.name}>
+                  <span>{student.name}</span>
+                  <span>{student.gender}</span>
+                  <span>{student.age}</span>
+                  <span>{student.phone}</span>
+                  <span onClick={() => {
+                    deleteList(student.name)
+                  }}>删除</span>
+                </div>
+              )
+            })
+          }
+        </ul>
+      )
+    }
+
+    delete(name) {
+
+    }
+  }
+
+  ReactDOM.render(<App/>, document.getElementById('app'))
+</script>
+
+</body>
+</html>
