@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>ref使用</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../../js/react.development.js"></script>
+<script src="../../js/react-dom.development.js"></script>
+<script src="../../js/babel.min.js"></script>
+<script type="text/babel">
+  /*
+   * 使用ref
+   * 尽量不用ref
+   */
+  class CustomTextInput extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {}
+      this.myInput = React.createRef()
+    }
+
+    render() {
+      return (
+        <div>
+          <input ref={this.myInput} placeholder="请输入内容" type='text'/>
+          <button onClick={() => {
+            this.focusTextInput()
+          }}>获取焦点
+          </button>
+        </div>
+      )
+    }
+
+    focusTextInput() {
+      console.log(this.myInput)
+      this.myInput.current.focus()
+    }
+  }
+
+  ReactDOM.render(<CustomTextInput/>, document.getElementById('app'))
+</script>
+
+</body>
+</html>
