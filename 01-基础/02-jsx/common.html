@@ -29,9 +29,51 @@
    */
   ReactDOM.render(
     <div>
-      <span>{ 100 + 12 * 10 }</span>
-    </div>
+      <span>{100 + 12 * 10}</span>
+    </div>,
+    document.getElementById('app')
   )
+</script>
+
+<script type="text/babel">
+  /*
+   * 使用颜色
+   */
+  const color = {
+    backgroundColor: 'red',
+    color: 'yellow',
+    fontSize: '15px'
+  }
+
+  ReactDOM.render(<div>
+      <h2 style={color}>颜色来了</h2>
+    </div>,
+    document.getElementById('app')
+  )
+</script>
+
+<script type="text/babel">
+  /*
+   * 列表渲染
+   * JSX的注释必须用{}括起来
+   */
+  const singers = [
+    { name: '张三', age: 38 },
+    { name: '李四', age: 38 },
+    { name: '王五', age: 38 },
+    { name: '赵六', age: 40 }
+  ]
+  
+  const vDom = (<ul>
+    {
+      singers.map(singer => {
+        { /* 这是注释 */ }
+        return <li key={singer.name}>{singer.name}</li>
+      })
+    }
+  </ul>)
+  
+  ReactDOM.render(vDom, document.getElementById('app'))
 </script>
 
 </body>

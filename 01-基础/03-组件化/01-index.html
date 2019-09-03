@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件化</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../../js/react.development.js"></script>
+<script src="../../js/react-dom.development.js"></script>
+<script src="../../js/babel.min.js"></script>
+<script type="text/babel">
+  /*
+   * 函数式组件
+   */
+  function School(props) {
+    return (
+      <div>
+        <div>{props.name}</div>
+        <div>{props.gender}</div>
+        <div>{props.colleges}</div>
+      </div>
+    )
+  }
+  
+  ReactDOM.render(<School name={'数学'} gender={'女'} colleges={['JS', 'Java', 'Python']} />, document.getElementById('app'))
+</script>
+
+<script type="text/babel">
+  /*
+   * 函数式组件的嵌套
+   */
+  function Name(props) {
+    return <div>{props.name}</div>
+  }
+  function Gender(props) {
+    return <div>{props.gender}</div>
+  }
+  function College(props) {
+    return <div>{props.college}</div>
+  }
+  function School() {
+    return (<div>
+      <Name name={'王强'}/>
+      <Gender gender={'女'}/>
+      <College college={['数学', '物理']}/>
+    </div>)
+  }
+  
+  ReactDOM.render(<School/>, document.getElementById('app'))
+</script>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>class 关键字创建组件</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../../js/react.development.js"></script>
+<script src="../../js/react-dom.development.js"></script>
+<script src="../../js/babel.min.js"></script>
+<script type="text/babel">
+  /*
+   * 注意this的使用
+   * 函数式组件是无状态组件，class创建出来的是有状态组件
+   * 状态：state
+   */
+  class School extends React.Component{
+    render() {
+      return (<div>
+        <div>我叫{this.props.name}</div>
+        <div>姓别：{this.props.gender}</div>
+      </div>)
+    }
+  }
+  ReactDOM.render(<School name={'小明'} gender={'男'} />, document.getElementById('app'))
+</script>
+
+</body>
+</html>
