@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>九宫格案例</title>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="../../js/react.development.js"></script>
+<script src="../../js/react-dom.development.js"></script>
+<script src="../../js/babel.min.js"></script>
+<script type="text/babel">
+  /*
+   * 这节最重要的知识点：如果一个数组是JSX数组，那它可以直接被渲染成DOM列表
+   */
+  class LKFlexView extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        shopArray: []
+      }
+    }
+
+    static defaultProps = {
+      dataArray: [
+        { name: '番茄' },
+        { name: '苹果' },
+        { name: '橘子' },
+        { name: '香蕉' },
+        { name: '圣女果' },
+        { name: '圆子' },
+        { name: '桃子' },
+        { name: '樱桃' },
+        { name: '车里子' },
+      ]
+    }
+
+    render() {
+      return (
+        <div className="box">
+          {/*上部分*/}
+          <div className="top">
+            <button onClick={() => this.add()}>add</button>
+            <button onClick={() => this.remove()}>remove</button>
+          </div>
+          {/*下部分*/}
+          <div className="bottom">
+            { this.state.shopArray }
+          </div>
+        </div>
+      )
+    }
+
+    add() {
+      const { dataArray } = this.props
+      const { shopArray } = this.state
+      if (shopArray.length >= 9) {
+        alert('已经很多了，不能再加了~')
+        return
+      }
+      const shopView = (
+        <div key={shopArray.length}>
+          <div>{dataArray[shopArray.length].name}</div>
+        </div>
+      )
+      shopArray.push(shopView)
+      this.setState({
+        shopArray
+      })
+    }
+    
+    remove() {
+      const { shopArray } = this.state
+      if (shopArray.length <= 0) {
+        alert('已经没有了，没法再减了~')
+        return
+      }
+      shopArray.pop()
+      this.setState({
+        shopArray
+      })
+    }
+  }
+
+  ReactDOM.render(<LKFlexView/>, document.getElementById('app'))
+</script>
+
+</body>
+</html>
